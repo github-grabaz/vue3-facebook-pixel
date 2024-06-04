@@ -1,4 +1,11 @@
-import type { App } from 'vue';
+import { App } from 'vue';
+
+interface IImplementsRouter {
+    afterEach(route: IImplementsRoute): void;
+}
+interface IImplementsRoute {
+    name: string;
+}
 declare const _eventsConst: readonly string[];
 export type TFbqEvents = typeof _eventsConst[number];
 declare global {
@@ -9,19 +16,21 @@ declare global {
 interface IConfig {
     debug: boolean;
     excludes?: string[];
-    router?: any;
+    router?: IImplementsRouter;
 }
-type TFbqData = {
-    [key: string]: any;
-};
+/**
+ * Regular Object. Key: srting
+ * Values reference: https://developers.facebook.com/docs/meta-pixel/reference#object-properties
+ */
+type TFbqDataSimpleValue = string | number | string[] | number[];
+type TFbqData = Record<string, TFbqDataSimpleValue | Record<string, TFbqDataSimpleValue>[]>;
 interface IFbqPlugin {
     init(appId: string, data?: TFbqData): void;
     event(name: string, data?: any): void;
     query(): void;
 }
-export declare const useFbq: () => IFbqPlugin | undefined;
-declare const _default: {
-    install: (app: App<any>, options: IConfig) => void;
+export declare function useFbq(): IFbqPlugin;
+export declare const VueFbq: {
+    install: (app: App, options: IConfig) => void;
 };
-export default _default;
-//# sourceMappingURL=index.d.ts.map
+export {};

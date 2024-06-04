@@ -1,16 +1,14 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import fbqPlugin, { useFbq } from './plugin/fbq'
+import { VueFbq } from './plugin'
 
 const app = createApp(App)
-// install plugin
-app.use(fbqPlugin, {
+// Make sure you've pasted the fbq code into your index.html!
+// https://developers.facebook.com/docs/meta-pixel/get-started
+// usage:
+app.use(VueFbq, {
+  pixelId: 'your-pixel-id-goes-here',
   debug: true
 })
 
 app.mount('#app')
-
-// init fbq
-const fbq = useFbq()
-
-fbq?.init('your-pixel-id-goes-here')

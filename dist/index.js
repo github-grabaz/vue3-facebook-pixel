@@ -1,1 +1,55 @@
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0});var e=require("vue");const o=Symbol("Vue3AnalyticsFbqKey"),t=["AddPaymentInfo","AddToCart","AddToWishlist","CompleteRegistration","Contact","CustomizeProduct","Donate","FindLocation","InitiateCheckout","Lead","PageView","Purchase","Schedule","Search","StartTrial","SubmitApplication","Subscribe","ViewContent"],n={debug:!1,excludes:[]},i=()=>void 0!==window.fbq||(n.debug&&console.warn("[Vue3 fbq]: `window.fbq` is not defined!"),!1),d=(e,o={})=>{i()&&(n.debug&&console.log(`[Vue3 fbq] Initializing app ${e}`),a("init",e,o))},u=(e,o={})=>{i()&&(n.debug&&(console.groupCollapsed(`[Vue3 fbq] Track event "${e}"`),console.log(`With data: ${o}`),console.groupEnd()),-1===t.indexOf(e)?a("trackCustom",e,o):a("track",e,o))},a=(...e)=>{i()&&(n.debug&&(console.groupCollapsed("[Vue fbq] Raw query"),console.log("With data: ",...e),console.groupEnd()),window.fbq(...e))};var c={install:(e,t)=>{const{router:i,debug:c,excludes:s}=t;n.excludes=s||n.excludes,n.debug=!!c;const l={init:d,event:u,query:a};if(i&&"function"==typeof i.afterEach){const{excludes:e}=n;i.afterEach((({name:o})=>{e&&-1!==e.indexOf(o)||l.event("PageView")}))}e.provide(o,l)}};exports.default=c,exports.useFbq=()=>e.inject(o);
+import { inject as g } from "vue";
+const d = Symbol("VueAnalyticsFbqKey"), p = [
+  "AddPaymentInfo",
+  "AddToCart",
+  "AddToWishlist",
+  "CompleteRegistration",
+  "Contact",
+  "CustomizeProduct",
+  "Donate",
+  "FindLocation",
+  "InitiateCheckout",
+  "Lead",
+  "PageView",
+  "Purchase",
+  "Schedule",
+  "Search",
+  "StartTrial",
+  "SubmitApplication",
+  "Subscribe",
+  "ViewContent"
+], t = "[Vue fbq]: ", n = {
+  debug: !1,
+  excludes: []
+}, u = () => {
+  n.debug && console.warn(t + "Plugin injection failed!");
+}, q = {
+  init: () => u,
+  event: () => u,
+  query: () => u
+}, s = () => typeof window.fbq > "u" ? (n.debug && console.warn(t + '"window.fbq" is not defined!'), !1) : !0, w = (e, o = {}) => {
+  s() && (n.debug && console.log(`${t}Initializing app ${e}`), i("init", e, o));
+}, x = (e, o = {}) => {
+  s() && (n.debug && (console.groupCollapsed(`${t}Track event "${e}"`), console.log(`With data: ${o}`), console.groupEnd()), p.indexOf(e) === -1 ? i("trackCustom", e, o) : i("track", e, o));
+}, i = (...e) => {
+  s() && (n.debug && (console.groupCollapsed(t + "Raw query"), console.log("With data: ", ...e), console.groupEnd()), window.fbq(...e));
+}, y = (e, o) => {
+  const { router: c, debug: f, excludes: a } = o;
+  n.excludes = a || n.excludes, n.debug = f;
+  const r = { init: w, event: x, query: i };
+  if (c && typeof c.afterEach == "function") {
+    const { excludes: l } = n;
+    c.afterEach(({ name: b }) => {
+      l && l.indexOf(b) !== -1 || r.event("PageView");
+    });
+  }
+  e.provide(d, r);
+};
+function C() {
+  return g(d, q);
+}
+const P = { install: y };
+export {
+  P as VueFbq,
+  C as useFbq
+};

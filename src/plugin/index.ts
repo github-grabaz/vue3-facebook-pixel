@@ -5,7 +5,15 @@ import type { App, InjectionKey } from 'vue'
 // Inspired by https://github.com/threadhandler/vue-analytics-facebook-pixel
 
 // Vue plugin key
-const PluginKey: InjectionKey<IFbqPlugin> = Symbol('Vue3AnalyticsFbqKey')
+const PluginKey: InjectionKey<IFbqPlugin> = Symbol('VueAnalyticsFbqKey')
+
+interface IImplementsRouter {
+  afterEach(route: IImplementsRoute): void
+}
+
+interface IImplementsRoute {
+  name: string
+}
 
 // Events: https://developers.facebook.com/docs/meta-pixel/reference
 const fbqEvents = [
@@ -30,28 +38,30 @@ declare global {
 }
 
 interface IConfig {
+  pixelId: string
   debug: boolean
   excludes?: string[]
-  router?: any // 🤔
+  router?: IImplementsRouter
 }
 
 /**
- * Regular Object. Key: srting
+ * Regular Object.
  * Values reference: https://developers.facebook.com/docs/meta-pixel/reference#object-properties
  */
 type TFbqDataSimpleValue = string | number | string[] | number[]
 type TFbqData = Record<string, TFbqDataSimpleValue | Record<string, TFbqDataSimpleValue>[]>
 
 interface IFbqPlugin {
-  init(appId: string, data?: TFbqData): void
-  event(name: string, data?: any): void
+  // init(appId: string, data?: TFbqData): void
+  event(name: TFbqEvents | string, data?: any): void
   query(): void
 }
 
-const _consolePrefix = '[Vue3 fbq]: '
+const _consolePrefix = '[Vue fbq]: '
 
 // Configuration
 const config: IConfig = {
+  pixelId: '',
   debug: false,
   excludes: []
 }
@@ -63,7 +73,7 @@ const _injectionWarn = () => {
 }
 
 const _defaultValue: IFbqPlugin = {
-  init: () => _injectionWarn,
+  // init: () => _injectionWarn,
   event: () => _injectionWarn,
   query: () => _injectionWarn
 }
@@ -86,14 +96,14 @@ const _fbqEnabled = (): boolean => {
 /**
  * Init facebook tracking pixel. Call it before using any other methods.
  */
-const init = (appId: string, data: TFbqData = {}) => {
+const init = (appId: string) => {
   if (!_fbqEnabled()) return
 
   if (config.debug) {
     console.log(`${_consolePrefix}Initializing app ${appId}`)
   }
 
-  query('init', appId, data)
+  query('init', appId)
 }
 
 /**
@@ -132,18 +142,20 @@ const query = (...args: any) => {
 }
 
 const install = (app: App, options: IConfig) => {
-  const { router, debug, excludes } = options
+  const { pixelId, debug, router, excludes } = options
 
   config.excludes = excludes || config.excludes
   config.debug = debug
 
-  const fbq: IFbqPlugin = { init, event, query }
+  const fbq: IFbqPlugin = { event, query }
+
+  init(pixelId)
 
   // Support for vue-router:
   if (router && typeof router['afterEach'] === 'function') {
     const { excludes } = config
 
-    router.afterEach(({ name }: any) => {
+    router.afterEach(({ name }: IImplementsRoute) => {
       if (excludes && excludes.indexOf(name) !== -1) {
         return
       }
@@ -156,8 +168,9 @@ const install = (app: App, options: IConfig) => {
 }
 
 // Composable macro
-export const useFbq = (): IFbqPlugin => {
-  return inject<IFbqPlugin>(PluginKey, _defaultValue)
+export function useFbq(): IFbqPlugin {
+  return inject(PluginKey, _defaultValue)
 }
 // TODO: readme.md before the first commit!
-export default { install }
+
+export const VueFbq = { install }

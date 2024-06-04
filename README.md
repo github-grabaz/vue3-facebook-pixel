@@ -1,9 +1,44 @@
-# Vue 3 + TypeScript + Vite
+# Vue 3 Facebook Pixel
+Tiny wrapper around Facebook Pixel API for Vue 3.
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+## Prerequisites
+To use this plugin you need an installed [Facebook Pixel](https://developers.facebook.com/docs/meta-pixel/get-started).
 
-## Recommended Setup
+## Install
+With NPM:
+```bash
+$ npm install TODO
+```
 
-- [VS Code](https://code.visualstudio.com/) + [Vue - Official](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (previously Volar) and disable Vetur
+## Usage
 
-- Use [vue-tsc](https://github.com/vuejs/language-tools/tree/master/packages/tsc) for performing the same type checking from the command line, or for generating d.ts files for SFCs.
+### Vue 3 Composition API
+
+**main.js**
+```js
+import { createApp } from 'vue'
+import { VueFbq } from 'TODO'
+
+import App from './App.vue'
+
+const app = createApp(App)
+  
+app.use(VueFbq, { pixelId: 'your-pixel-id', debug: true })
+```
+
+**MyComponent.vue**
+```js
+<script setup>
+import { useFbq } from 'TODO'
+
+const fbq = useFbq()
+
+const trackPurchase = () => {
+  // events reference: https://developers.facebook.com/docs/meta-pixel/reference
+  fbq.event('Purchase', {
+    currency: 'USD',
+    value: '7.99'
+  })
+}
+</script>
+```
