@@ -1,5 +1,5 @@
 {
-  "name": "vue3-analytics-facebook-pixel",
+  "name": "vue3-facebook-pixel",
   "private": false,
   "version": "1.0.0",
   "description": "Tiny Facebook Pixel API wrapper for Vue 3",
@@ -8,7 +8,6 @@
   "files": [
     "dist/*"
   ],
-  "type": "module",
   "keywords": [
     "facebook",
     "facebook pixel",
@@ -19,6 +18,10 @@
     "vuejs"
   ],
   "license": "MIT",
+  "repository": {
+    "url": "https://github.com/ap-arto/vue3-facebook-pixel.git",
+    "type": "git"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build"
@@ -32,6 +35,6 @@
     "vue-tsc": "^2.0.6"
   },
   "peerDependencies": {
-    "vue": "^3.4.21"
+    "vue": "~3.0"
   }
 }

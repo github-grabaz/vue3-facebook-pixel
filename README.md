@@ -7,7 +7,7 @@ To use this plugin you need an installed [Facebook Pixel](https://developers.fac
 ## Install
 With NPM:
 ```bash
-$ npm install TODO
+$ npm i vue3-facebook-pixel --save
 ```
 
 ## Usage
@@ -17,7 +17,7 @@ $ npm install TODO
 **main.js**
 ```js
 import { createApp } from 'vue'
-import { VueFbq } from 'TODO'
+import { VueFbq } from 'vue3-facebook-pixel'
 
 import App from './App.vue'
 
@@ -29,7 +29,7 @@ app.use(VueFbq, { pixelId: 'your-pixel-id', debug: true })
 **MyComponent.vue**
 ```js
 <script setup>
-import { useFbq } from 'TODO'
+import { useFbq } from 'vue3-facebook-pixel'
 
 const fbq = useFbq()
 
