@@ -52,7 +52,6 @@ type TFbqDataSimpleValue = string | number | string[] | number[]
 type TFbqData = Record<string, TFbqDataSimpleValue | Record<string, TFbqDataSimpleValue>[]>
 
 interface IFbqPlugin {
-  // init(appId: string, data?: TFbqData): void
   event(name: TFbqEvents | string, data?: any): void
   query(): void
 }
@@ -73,7 +72,6 @@ const _injectionWarn = () => {
 }
 
 const _defaultValue: IFbqPlugin = {
-  // init: () => _injectionWarn,
   event: () => _injectionWarn,
   query: () => _injectionWarn
 }
@@ -171,6 +169,5 @@ const install = (app: App, options: IConfig) => {
 export function useFbq(): IFbqPlugin {
   return inject(PluginKey, _defaultValue)
 }
-// TODO: readme.md before the first commit!
 
 export const VueFbq = { install }

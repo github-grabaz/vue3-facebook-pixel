@@ -11,7 +11,6 @@ import { useFbq } from './plugin'
 const fbq = useFbq()
 
 const trackPurchase = () => {
-  // test event
   fbq.event('Purchase', {
     currency: 'USD',
     value: '7.99'

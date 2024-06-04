@@ -14,7 +14,7 @@ $ npm i vue3-facebook-pixel --save
 
 ### Vue 3 Composition API
 
-**main.js**
+**main.js**:
 ```js
 import { createApp } from 'vue'
 import { VueFbq } from 'vue3-facebook-pixel'
@@ -26,7 +26,7 @@ const app = createApp(App)
 app.use(VueFbq, { pixelId: 'your-pixel-id', debug: true })
 ```
 
-**MyComponent.vue**
+**MyComponent.vue**:
 ```js
 <script setup>
 import { useFbq } from 'vue3-facebook-pixel'
