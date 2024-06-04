@@ -1,0 +1,43 @@
+{
+  "name": "vue3-analytics-facebook-pixel",
+  "private": false,
+  "version": "1.0.0",
+  "description": "Tiny Facebook Pixel API wrapper for Vue 3",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "files": [
+    "dist/*"
+  ],
+  "type": "module",
+  "keywords": [
+    "facebook",
+    "facebook pixel",
+    "fbq",
+    "plugin",
+    "vue3",
+    "vue",
+    "vuejs"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "dev": "vite",
+    "build": "rollup -c",
+    "build:dev": "vue-tsc && vite build"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.4",
+    "rollup": "^4.18.0",
+    "rollup-plugin-delete": "^2.0.0",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-terser": "^7.0.2",
+    "rollup-plugin-typescript2": "^0.36.0",
+    "rollup-plugin-vue": "^6.0.0",
+    "typescript": "^5.2.2",
+    "vite": "^5.2.0",
+    "vue": "^3.4.21",
+    "vue-tsc": "^2.0.6"
+  },
+  "peerDependencies": {
+    "vue": "^3.4.21"
+  }
+}
