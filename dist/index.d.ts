@@ -14,19 +14,13 @@ declare global {
     }
 }
 interface IConfig {
+    pixelId: string;
     debug: boolean;
     excludes?: string[];
     router?: IImplementsRouter;
 }
-/**
- * Regular Object. Key: srting
- * Values reference: https://developers.facebook.com/docs/meta-pixel/reference#object-properties
- */
-type TFbqDataSimpleValue = string | number | string[] | number[];
-type TFbqData = Record<string, TFbqDataSimpleValue | Record<string, TFbqDataSimpleValue>[]>;
 interface IFbqPlugin {
-    init(appId: string, data?: TFbqData): void;
-    event(name: string, data?: any): void;
+    event(name: TFbqEvents | string, data?: any): void;
     query(): void;
 }
 export declare function useFbq(): IFbqPlugin;

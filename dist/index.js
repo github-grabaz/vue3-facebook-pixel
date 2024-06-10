@@ -1,5 +1,5 @@
-import { inject as g } from "vue";
-const d = Symbol("VueAnalyticsFbqKey"), p = [
+import { inject as p } from "vue";
+const d = Symbol("VueAnalyticsFbqKey"), q = [
   "AddPaymentInfo",
   "AddToCart",
   "AddToWishlist",
@@ -19,37 +19,37 @@ const d = Symbol("VueAnalyticsFbqKey"), p = [
   "Subscribe",
   "ViewContent"
 ], t = "[Vue fbq]: ", n = {
+  pixelId: "",
   debug: !1,
   excludes: []
-}, u = () => {
+}, r = () => {
   n.debug && console.warn(t + "Plugin injection failed!");
-}, q = {
-  init: () => u,
-  event: () => u,
-  query: () => u
-}, s = () => typeof window.fbq > "u" ? (n.debug && console.warn(t + '"window.fbq" is not defined!'), !1) : !0, w = (e, o = {}) => {
-  s() && (n.debug && console.log(`${t}Initializing app ${e}`), i("init", e, o));
-}, x = (e, o = {}) => {
-  s() && (n.debug && (console.groupCollapsed(`${t}Track event "${e}"`), console.log(`With data: ${o}`), console.groupEnd()), p.indexOf(e) === -1 ? i("trackCustom", e, o) : i("track", e, o));
+}, w = {
+  event: () => r,
+  query: () => r
+}, u = () => typeof window.fbq > "u" ? (n.debug && console.warn(t + '"window.fbq" is not defined!'), !1) : !0, x = (e) => {
+  u() && (n.debug && console.log(`${t}Initializing app ${e}`), i("init", e));
+}, y = (e, o = {}) => {
+  u() && (n.debug && (console.groupCollapsed(`${t}Track event "${e}"`), console.log(`With data: ${o}`), console.groupEnd()), q.indexOf(e) === -1 ? i("trackCustom", e, o) : i("track", e, o));
 }, i = (...e) => {
-  s() && (n.debug && (console.groupCollapsed(t + "Raw query"), console.log("With data: ", ...e), console.groupEnd()), window.fbq(...e));
-}, y = (e, o) => {
-  const { router: c, debug: f, excludes: a } = o;
-  n.excludes = a || n.excludes, n.debug = f;
-  const r = { init: w, event: x, query: i };
-  if (c && typeof c.afterEach == "function") {
+  u() && (n.debug && (console.groupCollapsed(t + "Raw query"), console.log("With data: ", ...e), console.groupEnd()), window.fbq(...e));
+}, h = (e, o) => {
+  const { pixelId: f, debug: a, router: c, excludes: b } = o;
+  n.excludes = b || n.excludes, n.debug = a;
+  const s = { event: y, query: i };
+  if (x(f), c && typeof c.afterEach == "function") {
     const { excludes: l } = n;
-    c.afterEach(({ name: b }) => {
-      l && l.indexOf(b) !== -1 || r.event("PageView");
+    c.afterEach(({ name: g }) => {
+      l && l.indexOf(g) !== -1 || s.event("PageView");
     });
   }
-  e.provide(d, r);
+  e.provide(d, s);
 };
-function C() {
-  return g(d, q);
+function P() {
+  return p(d, w);
 }
-const P = { install: y };
+const V = { install: h };
 export {
-  P as VueFbq,
-  C as useFbq
+  V as VueFbq,
+  P as useFbq
 };
